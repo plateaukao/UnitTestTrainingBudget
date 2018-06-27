@@ -27,7 +27,7 @@ public class BudgetCalculator {
         while (!pivotDate.isAfter(endDate)) {
             int monthBudget = budget.getBudget(pivotDate.getYear(), pivotDate.getMonthValue());
             int days = pivotDate.getDayOfMonth() - pivotStartDate.getDayOfMonth() + 1;
-            total +=  monthBudget * (days / getMonthLength(pivotDate));
+            total +=  monthBudget * days / getMonthLength(pivotDate);
 
             if(pivotDate.equals(endDate)) return total;
             // move forward
@@ -35,12 +35,11 @@ public class BudgetCalculator {
             pivotStartDate = LocalDate.of(pivotDate.getYear(), pivotDate.getMonth(), 1);
         }
 
-
         // add last part if necessary
-        if (endDate.getMonthValue() != pivotDate.getMonthValue()) {
+        if (endDate.getMonthValue() == pivotDate.getMonthValue()) {
             int monthBudget = budget.getBudget(endDate.getYear(), endDate.getMonthValue());
-            int days = endDate.getDayOfMonth() - endDate.getDayOfMonth() + 1;
-            total +=  monthBudget/days;
+            int days = endDate.getDayOfMonth() - startDate.getDayOfMonth() + 1;
+            total +=  monthBudget * days / getMonthLength(pivotDate);
         }
 
         return total;
