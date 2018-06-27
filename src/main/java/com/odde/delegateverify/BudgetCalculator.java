@@ -1,15 +1,24 @@
 package com.odde.delegateverify;
 
+import javafx.util.Pair;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Map;
 
 public class BudgetCalculator {
+
+    Map<Pair<Integer, Integer>, Integer> bbudget;
 
     Budget budget;
     public class Budget {
         public int getBudget(int year, int month) {
             return 0;
         }
+    }
+
+    public BudgetCalculator(Map bbudget) {
+        this.bbudget = bbudget;
     }
 
     public BudgetCalculator(Budget budget) {
@@ -32,8 +41,7 @@ public class BudgetCalculator {
             pivotStartDate = LocalDate.of(pivotDate.getYear(), pivotDate.getMonth(), 1);
             if( pivotDate.getMonthValue() == endDate.getMonthValue()){
                 pivotDate = endDate;
-            }
-            else {
+            } else {
                 //move to next month;
                 pivotDate = LocalDate.of(pivotDate.getYear(), pivotDate.getMonth(), getMonthLength(pivotDate));
             }
