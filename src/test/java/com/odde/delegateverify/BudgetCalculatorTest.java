@@ -17,7 +17,8 @@ public class BudgetCalculatorTest {
     @Test
     public void one_month() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 1, 1), LocalDate.of(2018, 1, 31), 31);
+        assertQueryEquals(LocalDate.of(2018, 1, 1),
+                LocalDate.of(2018, 1, 31), 31);
     }
 
     private void givenBudget() {
@@ -29,31 +30,36 @@ public class BudgetCalculatorTest {
     @Test
     public void multiple_months() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 1, 1), LocalDate.of(2018, 3, 31), 180);
+        assertQueryEquals(LocalDate.of(2018, 1, 1),
+                LocalDate.of(2018, 3, 31), 180);
     }
 
     @Test
     public void within_feb() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 2, 15), LocalDate.of(2018, 2, 25), 22);
+        assertQueryEquals(LocalDate.of(2018, 2, 15),
+                LocalDate.of(2018, 2, 25), 22);
     }
 
     @Test
     public void across_months() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 2, 15), LocalDate.of(2018, 3, 15), 73);
+        assertQueryEquals(LocalDate.of(2018, 2, 15),
+                LocalDate.of(2018, 3, 15), 73);
     }
 
     @Test
     public void another_case() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 2, 11), LocalDate.of(2018, 4, 20), 129);
+        assertQueryEquals(LocalDate.of(2018, 2, 11),
+                LocalDate.of(2018, 4, 20), 129);
     }
 
     @Test
     public void last_case() {
         givenBudget();
-        assertQueryEquals(LocalDate.of(2018, 5, 1), LocalDate.of(2018, 5, 30), 0);
+        assertQueryEquals(LocalDate.of(2018, 5, 1),
+                LocalDate.of(2018, 5, 30), 0);
     }
 
     private void assertQueryEquals(LocalDate startDate, LocalDate endDate, int budgetValue) {
