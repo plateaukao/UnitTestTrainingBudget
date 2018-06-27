@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
+import static java.time.LocalDate.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,48 +26,48 @@ public class BudgetCalculatorTest {
     }
 
     @Test
+    public void invalid_dates() {
+        LocalDate startDate = of(2018, 1,2);
+        LocalDate endDate = of(2018, 1,1);
+
+    }
+    @Test
     public void one_month() {
-        assertQueryEquals(LocalDate.of(2018, 1, 1),
-                LocalDate.of(2018, 1, 31),
-                31);
+        assertQueryEquals(31, of(2018, 1, 31), of(2018, 1, 1)
+        );
     }
 
     @Test
     public void multiple_months() {
-        assertQueryEquals(LocalDate.of(2018, 1, 1),
-                LocalDate.of(2018, 3, 31),
-                180);
+        assertQueryEquals(180, of(2018, 3, 31), of(2018, 1, 1)
+        );
     }
 
     @Test
     public void within_one_month() {
-        assertQueryEquals(LocalDate.of(2018, 2, 15),
-                LocalDate.of(2018, 2, 25),
-                22);
+        assertQueryEquals(22, of(2018, 2, 25), of(2018, 2, 15)
+        );
     }
 
     @Test
     public void across_months() {
-        assertQueryEquals(LocalDate.of(2018, 2, 15),
-                LocalDate.of(2018, 3, 15),
-                73);
+        assertQueryEquals(73, of(2018, 3, 15), of(2018, 2, 15)
+        );
     }
 
     @Test
     public void no_budget_case() {
-        assertQueryEquals(LocalDate.of(2018, 2, 11),
-                LocalDate.of(2018, 4, 20),
-                129);
+        assertQueryEquals(129, of(2018, 4, 20), of(2018, 2, 11)
+        );
     }
 
     @Test
     public void another_no_budget_case() {
-        assertQueryEquals(LocalDate.of(2018, 5, 1),
-                LocalDate.of(2018, 5, 30),
-                0);
+        assertQueryEquals(0, of(2018, 5, 30), of(2018, 5, 1)
+        );
     }
 
-    private void assertQueryEquals(LocalDate startDate, LocalDate endDate, int budgetValue) {
+    private void assertQueryEquals(int budgetValue, LocalDate endDate, LocalDate startDate) {
         assertThat(calculator.query(startDate, endDate)).isEqualTo(budgetValue);
     }
 }

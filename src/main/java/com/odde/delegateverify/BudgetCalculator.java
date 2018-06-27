@@ -2,6 +2,7 @@ package com.odde.delegateverify;
 
 import javafx.util.Pair;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class BudgetCalculator {
     }
 
     public int query(LocalDate startDate, LocalDate endDate) {
+        if (endDate.isBefore(startDate)) throw new InvalidParameterException();
+
         int total = 0;
         // same full month
         LocalDate pivotStartDate = startDate;
