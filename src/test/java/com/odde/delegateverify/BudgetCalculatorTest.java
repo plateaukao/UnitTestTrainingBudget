@@ -38,6 +38,24 @@ public class BudgetCalculatorTest {
         assertQueryEquals(LocalDate.of(2018, 2, 15), LocalDate.of(2018, 2, 25), 22);
     }
 
+    @Test
+    public void across_months() {
+        givenBudget();
+        assertQueryEquals(LocalDate.of(2018, 2, 15), LocalDate.of(2018, 3, 15), 73);
+    }
+
+    @Test
+    public void another_case() {
+        givenBudget();
+        assertQueryEquals(LocalDate.of(2018, 2, 11), LocalDate.of(2018, 4, 20), 129);
+    }
+
+    @Test
+    public void last_case() {
+        givenBudget();
+        assertQueryEquals(LocalDate.of(2018, 5, 1), LocalDate.of(2018, 5, 30), 0);
+    }
+
     private void assertQueryEquals(LocalDate startDate, LocalDate endDate, int budgetValue) {
         assertThat(calculator.query(startDate, endDate)).isEqualTo(budgetValue);
     }
