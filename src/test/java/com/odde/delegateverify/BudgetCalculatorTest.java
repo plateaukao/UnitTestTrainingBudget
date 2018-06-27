@@ -1,5 +1,6 @@
 package com.odde.delegateverify;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -12,6 +13,11 @@ public class BudgetCalculatorTest {
     private BudgetCalculator.Budget budget = mock(BudgetCalculator.Budget.class);
     private BudgetCalculator calculator = new BudgetCalculator(budget);
 
+    @Before
+    public void setup() {
+        givenBudget();
+    }
+
     private void givenBudget() {
         when(budget.getBudget(2018, 1)).thenReturn(31);
         when(budget.getBudget(2018, 2)).thenReturn(56);
@@ -20,7 +26,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void one_month() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 1, 1),
                 LocalDate.of(2018, 1, 31),
                 31);
@@ -28,7 +33,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void multiple_months() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 1, 1),
                 LocalDate.of(2018, 3, 31),
                 180);
@@ -36,7 +40,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void within_one_month() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 2, 15),
                 LocalDate.of(2018, 2, 25),
                 22);
@@ -44,7 +47,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void across_months() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 2, 15),
                 LocalDate.of(2018, 3, 15),
                 73);
@@ -52,7 +54,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void no_budget_case() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 2, 11),
                 LocalDate.of(2018, 4, 20),
                 129);
@@ -60,7 +61,6 @@ public class BudgetCalculatorTest {
 
     @Test
     public void another_no_budget_case() {
-        givenBudget();
         assertQueryEquals(LocalDate.of(2018, 5, 1),
                 LocalDate.of(2018, 5, 30),
                 0);
