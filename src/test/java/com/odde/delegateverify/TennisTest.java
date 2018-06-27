@@ -1,39 +1,76 @@
 package com.odde.delegateverify;
 
-import org.assertj.core.groups.Tuple;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.junit.Assert.assertEquals;
 
 public class TennisTest {
 
-    Tennis tennis = new Tennis("Joey", "Joseph");
+    Tennis tennis = new Tennis();
 
     @Test
-    public void testScoreUnder3and3() {
-        List<Tuple> testData = asList(
-                new Tuple(0, 0, "Love All"),
-                new Tuple(1, 0, "Fifteen Love"),
-                new Tuple(0, 1, "Love Fifteen"),
-                new Tuple(1, 1, "Fifteen All"),
-                new Tuple(2, 1, "Thirty Fifteen"),
-                new Tuple(2, 2, "Thirty All"),
-                new Tuple(2, 0, "Thirty Love"),
-                new Tuple(3, 2, "Forty Thirty"),
-                new Tuple(4, 2, "Joey Win"),
-                new Tuple(3, 3, "Deuce"),
-                new Tuple(3, 4, "Joseph Adv"),
-                new Tuple(4, 4, "Deuce"),
-                new Tuple(3, 5, "Joseph Win"));
+    public void love_all() {
+        scoreEquals("Love All");
+    }
 
-        for(Tuple tuple: testData) {
-            tennis.setPoints((int)tuple.toList().get(0), (int)tuple.toList().get(1));
-            assertThat(tennis.score()).isEqualTo((String)tuple.toList().get(2));
+    @Test
+    public void one_zero() {
+        tennis.firstPlayerScore();
+
+        scoreEquals("Fifteen Love");
+    }
+
+    @Test
+    public void two_zero() {
+        givenFirstPlayerScore(2);
+
+        scoreEquals("Thirty Love");
+    }
+
+    @Test
+    public void three_zero() {
+        givenFirstPlayerScore(3);
+
+        scoreEquals("Forty Love");
+    }
+
+    @Test
+    public void zero_one() {
+        tennis.secondPlayerScore();
+
+        scoreEquals("Love Fifteen");
+    }
+
+    @Test
+    public void zero_two() {
+        givenSecondPlayerScore(2);
+
+        scoreEquals("Love Thirty");
+
+    }
+    
+    @Test
+    public void one_one() {
+        tennis.firstPlayerScore();
+        tennis.secondPlayerScore();
+
+        scoreEquals("Fifteen All");
+    }
+
+    private void givenSecondPlayerScore(int times) {
+        for (int i = 0; i < times; i++) {
+            tennis.secondPlayerScore();
         }
     }
+
+    private void givenFirstPlayerScore(int times) {
+        for (int i = 0; i < times; i++) {
+            tennis.firstPlayerScore();
+        }
+    }
+
+    private void scoreEquals(String score) {
+        assertEquals(score, tennis.score());
+    }
+
 }
